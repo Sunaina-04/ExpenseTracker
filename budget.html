@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title>Budget & Reports - Expense Tracker</title>
+        <link rel= "stylesheet" href = "css/style.css">
+        <script src = "js/storage.js" defer></script>
+        <script src = "js/budget.js" defer></script>
+    </head>
+    <body>
+        <div class = "container">
+            <nav class = "app-nav">
+                <span class = "app-nav-title">ClearSpend</span>
+                <div class = "app-nav-links">
+                    <a href = "index.html">Transactions</a>
+                    <a href = "budget.html" class = "active">Budget &amp; Reports</a>
+                </div>
+            </nav>
+
+            <h1>Budget &amp; Reports</h1>
+
+            <!-- Setup Budget -->
+             <section class = "panel">
+                <h2>Set Up Budget</h2>
+                <form id = "budget-form" class = "inline-form">
+                    <div class = "form-group">
+                        <label for = "monthly-income">Total Monthly Income</label>
+                        <input type="number" id = "monthly-income" min ="0" placeholder="e.g. 5000" required>
+                    </div>
+                    <button type = "submit">Save Budget</button>
+                </form>
+             </section>
+
+             <div class = "main-content">
+                <!-- Fixed expenses -->
+                 <section class = "panel">
+                    <h2>Fixed Expenses</h2>
+                    <ul id = "fixed-list" class = "fixed-list"></ul>
+                    <div class = "total-card">
+                        <span>Total Fixed Overhead</span>
+                        <span id = "fixed-total">₹0.00</span>
+                    </div>
+                 </section>
+
+                 <div class = "form-container">
+                    <h2 id = "fixed-form-title">Add Fixed Obligation</h2>
+                    <form id = "fixed-form">
+                        <div class = "form-group">
+                            <label for = "fixed-name">Name</label>
+                            <input type = "text" id ="fixed-name" placeholder="e.g. Fridge EMI" required>
+                        </div>
+                        <div class = "form-group">
+                            <label for = "fixed-amount">Amount</label>
+                            <input type = "number" id ="fixed-amount" min = "0" placeholder="Enter amount..." required>
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "fixed-due-date">Due Date (day of the month)</label>
+                            <input type = "number" id ="fixed-due-date" min = "1" max = "31" placeholder="e.g. 6" required>
+                        </div>
+
+                        <div class = "form-group">
+                            <label for = "fixed-category">Category</label>
+                            <select id="fixed-category" required>
+                                <option value = "Loan/EMI">Loan / EMI</option>
+                                <option value = "Subscription/Bill">Subscription / Bill</option>
+                            </select>
+                        </div>
+                        <button type = "submit" id = "fixed-submit-btn">Add</button>
+                        <button type ="button" id="fixed-cancel-btn" class = "cancel-btn" hidden>Cancel / Edit</button>
+                    </form>
+                 </div>
+             </div>
+
+             <!-- Financial Overview and statistics -->
+              <section class = "panel">
+                <h2>Financial Overview</h2>
+                <div class ="overview-card">
+                    <h3>Total Monthly Income</h3>
+                    <p id = "overview-income">₹0.00</p>
+                </div>
+
+                <div class ="overview-card">
+                    <h3>Debt/EMI Commitment Ratio</h3>
+                    <p id = "overview-debt-ratio">0%</p>
+                </div>
+
+                <div class="overview-card">
+                    <h3>Spent vs Safe-to-Spend</h3>
+                    <p id="overview-spent">₹0.00 / ₹0.00</p>
+                </div>
+
+                <div class = "charts-row">
+                    <div class = "chart-block">
+                        <h3>Income Allocation</h3>
+                        <div class = "donut-wrapper">
+                            <div class = "donut" id="donut-legend"></div>
+                        </div>
+                    </div>
+
+                    <div class = "chart-block">
+                        <h3>Variable Expenses by Category</h3>
+                        <div class = "bar-chart" id = "bar-chart"></div>
+                    </div>
+                </div>
+              </section>
+        </div>
+    </body>
+</html>

@@ -11,6 +11,15 @@ let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
 transactionFormEle.addEventListener("submit", addTransaction);
 
+transactionListEle.addEventListener("click", (e) => {
+    //e.target.classList.contains what does this send? 
+    // it checks if the element that was clicked has the class "delete-btn". If it does, then we know that the user clicked on a delete button, and we can proceed to remove the transaction.
+    if(e.target.classList.contains("delete-btn")) {
+        const id = Number(e.target.dataset.id);
+        removeTransaction(id);
+    }
+});
+
 function addTransaction(e){
     // to prevent refreshing the page when the form is submitted
     e.preventDefault();
@@ -28,12 +37,15 @@ function addTransaction(e){
         }
     );
 
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-
-    updateTransactionList();
-    updateSummary();
+    saveAndRender();
 
     transactionFormEle.reset();
+}
+
+function saveAndRender() {
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+    updateTransactionList();
+    updateSummary();
 }
 
 function updateTransactionList(){
@@ -53,18 +65,15 @@ function updateTransactionList(){
 function createTransactionElement(transaction){
     const listItem = document.createElement("li");
     listItem.classList.add("transaction");
-
     listItem.classList.add(transaction.amount > 0 ? "income" : "expense");
-
     
     listItem.innerHTML = `
     <span>${transaction.description}</span>
     <span>
         ${formatCurrency(transaction.amount)}
-        <button class = "delete-btn" onclick = "removeTransaction(${transaction.id})">x</button> 
+        <button class = "delete-btn" data-id = "${transaction.id}">x</button> 
     </span>
     `
-
     return listItem;
 }
 
@@ -74,12 +83,12 @@ function updateSummary(){
     const balance = transactions.reduce((acc, transaction)=> acc+transaction.amount, 0);
 
     const income = transactions
-    .filter(transaction => transaction.amount >0)
-    .reduce((acc, transaction) => acc+transaction.amount ,0);
+    .filter(transaction => transaction.amount > 0)
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
 
     const expense = transactions
-    .filter(transaction => transaction.amount <0)
-    .reduce((acc, transaction) => acc+transaction.amount ,0);
+    .filter(transaction => transaction.amount < 0)
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
 
     balanceEle.textContent = formatCurrency(balance);
     incomeAmountEle.textContent = formatCurrency(income);
@@ -96,10 +105,8 @@ function formatCurrency(number){
 function removeTransaction(id){
     // filter out the once we want to delete 
     transactions = transactions.filter(transaction => transaction.id!== id);
-    localStorage.setItem("transactions", JSON.stringify(transactions));
-
-    updateTransactionList();
-    updateSummary();
+    
+    saveAndRender();
 }
 // initial render 
 updateTransactionList();
