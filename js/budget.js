@@ -84,6 +84,7 @@ fixedFormEle.addEventListener("submit", (e) => {
 });
 
 fixedCancelBtnEle.addEventListener("click", exitFixedEditMode);
+[monthlyIncomeEle, savingsGoalEle, fixedAmountEle, fixedDueDateEle].forEach(preventNumberInputScroll);
 
 // listener for every fixed expenditure's edit/ delete button :
 fixedListEle.addEventListener("click", (e) => {

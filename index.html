@@ -47,6 +47,26 @@
             </div>
         </div>
 
+        <!-- presets panel -->
+        <div class ="panel quick-add-panel">
+            <div class= "quick-add-header">
+                <h2>Presets</h2>
+                <button type ="button" id = "quick-add-new-btn" class = "quick-add-new-btn">+ New</button>
+            </div>
+
+            <div class = "quick-add-pills" id ="quick-add-pills">
+                <!-- presets to be inseted here using js -->
+            </div>
+            <div class ="quick-add-create-form" id = "quick-add-create-form" hidden>
+                <input type = "text" id = "quick-add-name" placeholder="eg. Coffee" autocomplete="off">
+                <input type ="number" id = "quick-add-amount" placeholder="Default amount" min ="0">
+
+                <select id = "quick-add-category"></select>
+                <button type ="button" id = "quick-add-save-btn" class ="cancel-btn">Save</button>
+                <button type="button" id = "quick-add-cancel-btn" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+
         <div class="main-content">
             <div class="transaction-container">
                 <h2>Transactions</h2>
@@ -61,7 +81,7 @@
                 <form id="transaction-form">
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" id="description" placeholder="Enter description" required>
+                        <input type="text" id="description" placeholder="Enter description" autocomplete="off" required>
                     </div>
 
                     <div class="form-group">

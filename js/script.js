@@ -13,19 +13,103 @@ const formTitleEle = document.getElementById("form-title");
 const submitBtnEle = document.getElementById("submit-btn");
 const cancelEditBtnEle = document.getElementById("cancel-edit-btn");
 
+// presets
+const quickAddPillsEle = document.getElementById("quick-add-pills");
+const quickAddNewBtnEle = document.getElementById("quick-add-new-btn");
+const quickAddCreateFormEle = document.getElementById("quick-add-create-form");
+const quickAddNameEle = document.getElementById("quick-add-name");
+const quickAddAmountEle = document.getElementById("quick-add-amount");
+const quickAddCategoryEle = document.getElementById("quick-add-category");
+const quickAddSaveBtnEle = document.getElementById("quick-add-save-btn");
+const quickAddCancelBtnEle = document.getElementById("quick-add-cancel-btn");
 
+// safe to spend 
 const safeToSpendAmountEle = document.getElementById("safe-to-spend-amount");
 const dailyAllowanceEle = document.getElementById("daily-allowance");
 const safeToSpendBarEle = document.getElementById("safe-to-spend-bar");
 const safeToSpendCardEle = document.getElementById("safe-to-spend-card");
 
 let transactions = getTransactions();
+let quickAddPresets = getQuickAddPresets();
 
 let editingId = null;
 
 // Initial setup 
 dateEle.valueAsDate = new Date();
 populateCategoryOptions("expense");
+preventNumberInputScroll(amountEle);
+
+// presets:
+
+quickAddCategoryEle.innerHTML = getCategoryOptions("expense").map(opt => `<option value = "${opt}">${opt}</option>`).join("");
+preventNumberInputScroll(quickAddAmountEle);
+
+quickAddNewBtnEle.addEventListener("click", () => {
+    quickAddCreateFormEle.hidden = !quickAddCreateFormEle.hidden;
+});
+
+quickAddCancelBtnEle.addEventListener("click", resetQuickAddCreateForm);
+
+quickAddSaveBtnEle.addEventListener("click", () => {
+    const name = quickAddNameEle.value.trim();
+    const amount = parseFloat(quickAddAmountEle.value);
+    const category = quickAddCategoryEle.value;
+
+    if(!name || isNaN(amount)) return;
+
+    quickAddPresets.push({id : Date.now(), name, amount, category});
+    saveQuickAddPresets(quickAddPresets);
+    renderQuickAddPills();
+    resetQuickAddCreateForm();
+});
+
+quickAddPillsEle.addEventListener("click",(e) => {
+    const id = Number(e.target.dataset.id);
+    if (e.target.classList.contains("quick-add-delete")) {
+        quickAddPresets = quickAddPresets.filter(p => p.id !== id);
+        saveQuickAddPresets(quickAddPresets);
+        renderQuickAddPills();
+    }else if (e.target.classList.contains("quick-add-trigger")) {
+        applyQuickAddPreset(id);
+    }
+});
+
+function resetQuickAddCreateForm() {
+    quickAddNameEle.value = "";
+    quickAddAmountEle.value = "";
+    quickAddCreateFormEle.hidden = true;
+}
+
+function renderQuickAddPills() {
+    quickAddPillsEle.innerHTML = quickAddPresets.length ? quickAddPresets.map(p =>` 
+        <span class="quick-add-pill">
+                <button type="button" class="quick-add-trigger" data-id="${p.id}">${p.name} . ${formatCurrency(p.amount)}</button>
+                <button type="button" class="quick-add-delete" data-id="${p.id}" aria-label="Remove preset">x</button>
+            </span>
+        `).join("")
+        : `<p class="empty-state">No quick-add presets yet - click "+ New" to create one (e.g. Coffee, Bus fare).</p>`;
+};
+
+// presets dont log anything by itself. user will have to click add transaction
+
+function applyQuickAddPreset(id) {
+    const preset = quickAddPresets.find (p => p.id === id);
+    if(!preset) return;
+
+    exitEditMode();
+    descriptionEle.value = preset.name;
+    amountEle.value = preset.amount;
+    typeExpenseEle.checked = true;
+    populateCategoryOptions("expense");
+    categoryEle.value = preset.category;
+    dateEle.valueAsDate = new Date();
+
+    transactionFormEle.scrollIntoView({behavior:"smooth", block:"nearest"});
+    amountEle.focus();
+    amountEle.select();
+}
+
+renderQuickAddPills();
 
 transactionFormEle.addEventListener("submit", handleFormSubmit);
 cancelEditBtnEle.addEventListener("click", exitEditMode);

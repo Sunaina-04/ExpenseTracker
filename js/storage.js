@@ -6,6 +6,7 @@ Keeping it in one place maintains the consistency.
 
 const TRANSACTIONS_KEY = "transactions";
 const BUDGET_CONFIG_KEY = "budgetConfig";
+const QUICK_ADD_PRESETS_KEY = "quickAddPresets";
 
 // transactions
 
@@ -33,6 +34,15 @@ function saveBudgetConfig(config) {
     localStorage.setItem(BUDGET_CONFIG_KEY, JSON.stringify(config));
 }
 
+// presets 
+function getQuickAddPresets() {
+    return JSON.parse(localStorage.getItem(QUICK_ADD_PRESETS_KEY)) || [];
+}
+
+function saveQuickAddPresets(presets) {
+    localStorage.setItem(QUICK_ADD_PRESETS_KEY, JSON.stringify(presets));
+}
+
 // helpers :-
 
 function formatCurrency(number) {
@@ -41,6 +51,11 @@ function formatCurrency(number) {
         currency : "INR"
     }).format(number);
 }
+
+// prevents number inputs change their value on mouse-wheel scroll by default trigger preventing number change by accident while just scrolling the page.
+function preventNumberInputScroll(inputEle) {
+    inputEle.addEventListener("wheel", () => inputEle.blur());
+} 
 
 // year-month date style used to count only this month's variable expense
 //  safe to spend balance will natually reset each month  
