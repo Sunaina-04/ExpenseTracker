@@ -1,99 +1,100 @@
 <!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
-        <title>Expense Tracker</title>
-        <link rel = "stylesheet" href = "css/style.css">
-        <script src = "js/script.js" defer></script>
-    </head>
-    <body>
-        <div class="container">
-            <!-- navigation -->
-            <nav class = "app-nav">
-                <span class = "app-nav-title">ClearSpend</span>
-                <div class = "app-nav-links">
-                    <a href = "index.html" class = "active">Transactions</a> 
-                    <!-- what does active mean here -->
-                    <a href = "budget.html">Budget &amp; Reports</a>
-                </div>
-            </nav>
-
-            <h1>Expense Tracker</h1>
-
-            <!-- Estimated safe to spend -->
-            <div class = "safe-to-send-card status-ok" id = "safe-to-spend-card">
-                <h2>Safe-to-Spend This Month</h2>
-                <h1 id = "spend-to-spend-amount">₹0.00</h1>
-                <p id ="daily-allowance" class="daily-allowance-text">₹0.00</p>
-                 <div class = "progress-track">
-                    <div class = "progress-bar" id="safe-to-spend-bar"></div>
-                 </div>
-                 <small>After fixed obligations &amp; saving goal - set these on the budget &amp; Reports page.</small>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/storage.js" defer></script>
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="app-nav">
+            <span class="app-nav-title">ClearSpend</span>
+            <div class="app-nav-links">
+                <a href="index.html" class="active">Transactions</a>
+                <a href="budget.html">Budget &amp; Reports</a>
             </div>
+        </nav>
 
-            <div class ="balance-container">
-                <h2>Transaction Totals</h2>
-                <h1 id="balance">₹0.00</h1>
+        <h1>Expense Tracker</h1>
 
-                <div class="summary">
-                    <div class="income"> 
-                        <h3> Income </h3>
-                        <p id="income-amount">₹0.00</p>
-                    </div>
-                    <div class="expenses">
-                        <h3>Expenses</h3>
-                        <p id="expense-amount">₹0.00</p>
-                    </div>
-                </div>
+        <!-- Safe-to-Spend banner: pulls from budgetConfig (set on budget.html) + this month's expenses -->
+        <div class="safe-to-spend-card status-ok" id="safe-to-spend-card">
+            <h2>Safe-to-Spend This Month</h2>
+            <h1 id="safe-to-spend-amount">₹0.00</h1>
+            <p id="daily-allowance" class="daily-allowance-text">₹0.00 / day</p>
+            <div class="progress-track">
+                <div class="progress-bar" id="safe-to-spend-bar"></div>
             </div>
+            <small>After fixed obligations &amp; savings goal — set these on the Budget &amp; Reports page.</small>
+        </div>
 
-            <div class="main-content">
-                <div class="transaction-container">
-                    <h2>Transactions</h2>
-                    <ul id = "transaction-list"> 
-                        <!--- TRANSACTIONS WILL BE INSERTED HERE USING JS  --->
-                    </ul>
+        <div class="balance-container">
+            <h2>Transaction Totals</h2>
+            <h1 id="balance">₹0.00</h1>
+
+            <div class="summary">
+                <div class="income">
+                    <h3>Income</h3>
+                    <p id="income-amount">₹0.00</p>
                 </div>
-                <div class="form-container">
-                    <h2>Add Transaction</h2>
-
-                    <form id = "transaction-form">
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input type = "text" id ="description" placeholder ="Enter description" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="amount">Amount</label>
-                            <input type = "number" id ="amount" placeholder ="Enter amount..."min="0" required>
-                        </div>
-                        
-                        <div class = "form-group">
-                            <label for = "category">Category</label>
-                            <select id = "category" required> </select>
-                        </div>
-                        
-                        <div class = "form-group">
-                            <label for = "date">Date</label>
-                            <input type = "date" id = "date" required>
-                        </div>
-
-                        <div class = "form-group"> 
-                            <label>Transaction Type</label>
-                            <div class = "type-toggle">
-                                <input type = "radio" id = "type-income" value = "income">
-                                <label for = "type-income"  class= "toggle-label income-label">Income</label>
-                                <input type = "radio" id = "type-expense" name = "type" value = "expense" checked>
-                            </div>
-                        </div>
-
-                        <button type = "submit" id = "submit-btn"> Add Transaction </button>
-                        <button type ="button" id = "cancel-edit-btn" class = "cancel-btn">Cancel Edit</button>
-                    </form>
-                    
+                <div class="expenses">
+                    <h3>Expenses</h3>
+                    <p id="expense-amount">₹0.00</p>
                 </div>
             </div>
         </div>
-    </body>
+
+        <div class="main-content">
+            <div class="transaction-container">
+                <h2>Transactions</h2>
+                <ul id="transaction-list">
+                    <!-- TRANSACTIONS WILL BE INSERTED HERE USING JS -->
+                </ul>
+            </div>
+
+            <div class="form-container">
+                <h2 id="form-title">Add Transaction</h2>
+
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" id="description" placeholder="Enter description" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Amount</label>
+                        <input type="number" id="amount" placeholder="Enter amount..." min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Transaction Type</label>
+                        <div class="type-toggle">
+                            <input type="radio" id="type-income" name="type" value="income">
+                            <label for="type-income" class="toggle-label income-label">Income</label>
+
+                            <input type="radio" id="type-expense" name="type" value="expense" checked>
+                            <label for="type-expense" class="toggle-label expense-label">Expense</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submit-btn">Add Transaction</button>
+                    <button type="button" id="cancel-edit-btn" class="cancel-btn" hidden>Cancel Edit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

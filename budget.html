@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset = "UTF-8">
-        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Budget & Reports - Expense Tracker</title>
-        <link rel= "stylesheet" href = "css/style.css">
-        <script src = "js/storage.js" defer></script>
-        <script src = "js/budget.js" defer></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/storage.js" defer></script>
+        <script src="js/budget.js" defer></script>
     </head>
     <body>
         <div class = "container">
@@ -26,7 +26,11 @@
                 <form id = "budget-form" class = "inline-form">
                     <div class = "form-group">
                         <label for = "monthly-income">Total Monthly Income</label>
-                        <input type="number" id = "monthly-income" min ="0" placeholder="e.g. 5000" required>
+                        <input type="number" id = "monthly-income" min ="0" placeholder="e.g. 40000" required>
+                    </div>
+                    <div class= "form-group">
+                        <label for="savings-goal">Target Savings Goal</label>
+                        <input type = "number" id ="savings-goal" min = "0" placeholder="20000" required>
                     </div>
                     <button type = "submit">Save Budget</button>
                 </form>
@@ -48,16 +52,11 @@
                     <form id = "fixed-form">
                         <div class = "form-group">
                             <label for = "fixed-name">Name</label>
-                            <input type = "text" id ="fixed-name" placeholder="e.g. Fridge EMI" required>
+                            <input type = "text" id ="fixed-name" placeholder="e.g. Car EMI" required>
                         </div>
                         <div class = "form-group">
                             <label for = "fixed-amount">Amount</label>
                             <input type = "number" id ="fixed-amount" min = "0" placeholder="Enter amount..." required>
-                        </div>
-
-                        <div class = "form-group">
-                            <label for = "fixed-due-date">Due Date (day of the month)</label>
-                            <input type = "number" id ="fixed-due-date" min = "1" max = "31" placeholder="e.g. 6" required>
                         </div>
 
                         <div class = "form-group">
@@ -67,8 +66,24 @@
                                 <option value = "Subscription/Bill">Subscription / Bill</option>
                             </select>
                         </div>
+
+                        <div class="form-group" id="due-date-group">
+                            <label for="fixed-due-date">Due Date (day of month)</label>
+                            <input type="number" id="fixed-due-date" min="1" max="31" placeholder="e.g. 5">
+                        </div>
+
+                        <div class = "form-group" id = "duration-group" hidden>
+                            <label for = "fixed-start-month">Start Month</label>
+                            <input type="month" id = "fixed-start-month">
+                        </div>
+                        
+                        <div class="form-group" id="duration-months-group" hidden>
+                        <label for="fixed-duration">Duration (months)</label>
+                        <input type="number" id="fixed-duration" min="1" placeholder="e.g. 24">
+                    </div>
+
                         <button type = "submit" id = "fixed-submit-btn">Add</button>
-                        <button type ="button" id="fixed-cancel-btn" class = "cancel-btn" hidden>Cancel / Edit</button>
+                        <button type ="button" id="fixed-cancel-btn" class = "cancel-btn" hidden>Cancel Edit</button>
                     </form>
                  </div>
              </div>
@@ -76,27 +91,28 @@
              <!-- Financial Overview and statistics -->
               <section class = "panel">
                 <h2>Financial Overview</h2>
-                <div class ="overview-card">
-                    <h3>Total Monthly Income</h3>
-                    <p id = "overview-income">₹0.00</p>
-                </div>
-
-                <div class ="overview-card">
-                    <h3>Debt/EMI Commitment Ratio</h3>
-                    <p id = "overview-debt-ratio">0%</p>
-                </div>
-
-                <div class="overview-card">
-                    <h3>Spent vs Safe-to-Spend</h3>
-                    <p id="overview-spent">₹0.00 / ₹0.00</p>
+                <div class="overview-cards">
+                    <div class="overview-card">
+                        <h3>Total Monthly Income</h3>
+                        <p id="overview-income">₹0.00</p>
+                    </div>
+                    <div class="overview-card">
+                        <h3>Debt/EMI Commitment Ratio</h3>
+                        <p id="overview-debt-ratio">0%</p>
+                    </div>
+                    <div class="overview-card">
+                        <h3>Spent vs Safe-to-Spend</h3>
+                        <p id="overview-spent">₹0.00 / ₹0.00</p>
+                    </div>
                 </div>
 
                 <div class = "charts-row">
                     <div class = "chart-block">
                         <h3>Income Allocation</h3>
                         <div class = "donut-wrapper">
-                            <div class = "donut" id="donut-legend"></div>
+                            <div class="donut" id="donut-chart"></div>
                         </div>
+                        <div class="donut-legend" id="donut-legend"></div>
                     </div>
 
                     <div class = "chart-block">

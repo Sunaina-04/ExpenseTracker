@@ -33,7 +33,7 @@ function saveBudgetConfig(config) {
     localStorage.setItem(BUDGET_CONFIG_KEY, JSON.stringify(config));
 }
 
-// helpers
+// helpers :-
 
 function formatCurrency(number) {
     return new Intl.NumberFormat("hi-IN", {
@@ -42,15 +42,31 @@ function formatCurrency(number) {
     }).format(number);
 }
 
-// year-month date style used to count onlt this month's variable expense
+// year-month date style used to count only this month's variable expense
 //  safe to spend balance will natually reset each month  
-
+// take budget to next month functionality -----to be added later 
 function getCurrentMonthKey(date = new Date()) {
     return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 }
 
-function getFixedTotal(budget) {
-    return budget.fixedObligations.reduce((sum, item) => sum + item.amount, 0);
+function isObligationActive(item, monthKey = getCurrentMonthKey()) {
+    if (item.category !== "Loan/EMI") return true;
+    if (!item.startMonth || !item.durationMonths) return true;
+
+    const monthIndex = (key) => {
+        const[y, m] = key.split("-").map(Number);
+        return y * 12 + (m - 1);
+    };
+
+    const start = monthIndex(item.startMonth);
+    const end = start + item.durationMonths - 1;
+    const current = monthIndex(monthKey);
+
+    return current >= start && current <= end;
+}
+
+function getFixedTotal(budget, monthKey = getCurrentMonthKey()) {
+    return budget.fixedObligations.filter(item => isObligationActive(item, monthKey)).reduce((sum, item) => sum + item.amount, 0);
 }
 
 /*

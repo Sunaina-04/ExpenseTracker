@@ -480,8 +480,13 @@ button[type="submit"]:active {
     align-items: end;
 }
 
+.inline-form .form-group {
+    margin-bottom: 0;
+}
+
 .inline-form button {
     height: fit-content;
+    margin-top: 0;
 }
 
 .fixed-list {
