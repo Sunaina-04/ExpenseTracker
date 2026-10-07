@@ -364,6 +364,119 @@ button[type="submit"]:active {
     border-bottom-color: #2e8b57;
 }
 
+/* ==========================================================
+   Login / sign-up page
+   ========================================================== */
+
+.auth-page {
+    background: linear-gradient(135deg, #2e8b57, #a8d5ba);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 36px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.auth-brand {
+    text-align: center;
+}
+
+.auth-brand h1 {
+    margin: 24px 0 8px;
+}
+
+.auth-brand p {
+    color: #718096;
+    margin-bottom: 24px;
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 4px;
+    margin-bottom: 28px;
+    background: #f1f4f8;
+    border-radius: 10px;
+}
+
+.auth-tab {
+    padding: 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #718096;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+}
+
+.auth-tab.active {
+    background: white;
+    color: #2e8b57;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-field input {
+    padding-right: 68px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #2e8b57;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+}
+
+.auth-message {
+    min-height: 24px;
+    margin: 4px 0 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.auth-message.error {
+    color: #dc2626;
+}
+
+.auth-message.success {
+    color: #059669;
+}
+
+.back-to-app {
+    display: block;
+    margin-top: 22px;
+    color: #2e8b57;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-to-app:hover {
+    text-decoration: underline;
+}
+
+.demo-note {
+    margin-top: 18px;
+    color: #718096;
+    font-size: 0.78rem;
+    text-align: center;
+}
+
 
 /* ==========================================================
    Safe-to-Spend hero card (index.html)
@@ -851,5 +964,9 @@ button[type="submit"]:active {
 
     .safe-to-spend-card h1 {
         font-size: 2rem;
+    }
+
+    .auth-card {
+        padding: 28px 20px;
     }
 }
