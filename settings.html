@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Expense Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/auth-guard.js"></script>
+    <script src="js/user.js" defer></script>
+    <script src="js/settings.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="app-nav">
+            <span class="app-nav-title" data-user-greeting>Welcome back</span>
+            <div class="app-nav-links">
+                <a href="index.html">Transactions</a>
+                <a href="budget.html">Budget &amp; Reports</a>
+                <a href="how-to-use.html">How to Use</a>
+                <a href="settings.html" class="active">Settings</a>
+                <a href="auth.html">Login / Sign up</a>
+            </div>
+        </nav>
+
+        <main class="content-page">
+            <h1>Settings</h1>
+            <section class="panel settings-panel">
+                <h2>Profile</h2>
+                <form id="settings-form">
+                    <div class="form-group">
+                        <label for="settings-name">Name</label>
+                        <input type="text" id="settings-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="settings-email">Email</label>
+                        <input type="email" id="settings-email" readonly>
+                    </div>
+                    <p id="settings-message" class="settings-message" role="status" aria-live="polite"></p>
+                    <button type="submit">Save changes</button>
+                </form>
+            </section>
+            <section class="panel settings-panel">
+                <h2>Account</h2>
+                <button type="button" id="logout-btn" class="cancel-btn">Log out</button>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
