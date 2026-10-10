@@ -364,6 +364,41 @@ button[type="submit"]:active {
     border-bottom-color: #2e8b57;
 }
 
+.content-page {
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.editable-content {
+    line-height: 1.7;
+}
+
+.editable-content h2 {
+    margin-top: 24px;
+}
+
+.editable-content h2:first-child {
+    margin-top: 0;
+}
+
+.settings-panel {
+    max-width: 620px;
+    margin: 0 auto 24px;
+}
+
+.settings-message {
+    min-height: 1.4em;
+    margin: 12px 0;
+}
+
+.settings-message.success {
+    color: #059669;
+}
+
+.settings-message.error {
+    color: #dc2626;
+}
+
 /* ==========================================================
    Login / sign-up page
    ========================================================== */

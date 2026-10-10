@@ -21,6 +21,11 @@
         </div>
 
         <form id="auth-form" novalidate>
+            <div class="form-group" id="name-group" hidden>
+                <label for="auth-name">Name</label>
+                <input type="text" id="auth-name" placeholder="Your name" autocomplete="name">
+            </div>
+
             <div class="form-group">
                 <label for="auth-email">Email</label>
                 <input type="email" id="auth-email" placeholder="you@example.com" autocomplete="email" required>

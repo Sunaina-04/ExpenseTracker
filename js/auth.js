@@ -1,6 +1,8 @@
 const USERS_KEY = "clearSpendUsers";
 
 const authForm = document.getElementById("auth-form");
+const nameGroup = document.getElementById("name-group");
+const nameInput = document.getElementById("auth-name");
 const loginTab = document.getElementById("login-tab");
 const signupTab = document.getElementById("signup-tab");
 const confirmPasswordGroup = document.getElementById("confirm-password-group");
@@ -30,6 +32,8 @@ function setMode(signupMode) {
     loginTab.setAttribute("aria-selected", String(!isSignup));
     signupTab.setAttribute("aria-selected", String(isSignup));
     confirmPasswordGroup.hidden = !isSignup;
+    nameGroup.hidden = !isSignup;
+    nameInput.required = isSignup;
     confirmPassword.required = isSignup;
     authSubmit.textContent = isSignup ? "Create account" : "Login";
     authTitle.textContent = isSignup ? "Create your account" : "Welcome back";
@@ -53,6 +57,7 @@ passwordToggle.addEventListener("click", () => {
 authForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const email = document.getElementById("auth-email").value.trim().toLowerCase();
+    const name = nameInput.value.trim();
     const password = passwordInput.value;
     const users = getUsers();
 
@@ -71,7 +76,7 @@ authForm.addEventListener("submit", (event) => {
             showMessage("An account with this email already exists.", "error");
             return;
         }
-        users.push({ id: Date.now(), email, password });
+        users.push({ id: Date.now(), name, email, password });
         localStorage.setItem(USERS_KEY, JSON.stringify(users));
         showMessage("Account created. You can now log in.", "success");
         authForm.reset();
